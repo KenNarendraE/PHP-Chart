@@ -28,7 +28,7 @@
             <?php
             $charts = [
                 "Cash Flow Analysis" => "cashflow.php",
-                "Revenue vs. Expenses"=> "cashflow.php",
+                "Revenue vs. Expenses"=> "revenue.php",
                 "Budget vs. Actual"=> "cashflow.php",
                 "Profit & Loss Overview"=> "cashflow.php",
                 "Financial Forecasting"=> "cashflow.php",
