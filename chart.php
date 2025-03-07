@@ -11,7 +11,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
-            <h1 class="logo">MyWebsite</h1>
+            <h1 class="logo">Dashboard</h1>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="chart.php">Charts</a></li>
