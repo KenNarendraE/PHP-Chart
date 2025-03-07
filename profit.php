@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue vs. Expenses</title>
+    <title>Profit & Loss Overview</title>
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
@@ -24,20 +24,27 @@
 
     <!-- Konten -->
     <div class="container">
-        <p>Grafik perbandingan pendapatan dan pengeluaran berdasarkan data bulanan.</p>
+        <p>Menampilkan gambaran keuntungan dan kerugian bulanan berdasarkan Revenue dan Expenses.</p>
         
         <!-- Container Chart -->
-        <div id="revenue-expenses-chart" style="width:100%; height:400px;"></div>
+        <div id="profit-loss-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Revenue vs. Expenses
-        Highcharts.chart('revenue-expenses-chart', {
+        // Data Revenue & Expenses
+        let revenueData = [150, 180, 200, 220, 250, 270, 300, 320, 310, 290, 280, 260];
+        let expensesData = [100, 110, 130, 140, 160, 180, 200, 210, 200, 190, 180, 170];
+
+        // Hitung Profit (Revenue - Expenses)
+        let profitData = revenueData.map((rev, index) => rev - expensesData[index]);
+
+        // Inisialisasi Highcharts untuk Profit & Loss Overview
+        Highcharts.chart('profit-loss-chart', {
             chart: {
-                type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
+                type: 'line'
             },
             title: {
-                text: 'Revenue vs. Expenses'
+                text: 'Profit & Loss Overview (2024)'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
@@ -51,13 +58,17 @@
                 }
             },
             series: [{
-                name: 'Revenue (Pendapatan)',
-                data: [100, 120, 140, 160, 180, 200, 220, 250, 230, 210, 190, 170],
-                color: '#2ecc71' // Warna hijau untuk revenue
+                name: 'Revenue (Pendapatan) → Hijau',
+                data: revenueData,
+                color: '#28a745'
             }, {
-                name: 'Expenses (Pengeluaran)',
-                data: [80, 90, 100, 110, 130, 140, 160, 180, 170, 150, 140, 120],
-                color: '#e74c3c' // Warna merah untuk expenses
+                name: 'Expenses (Pengeluaran) → Merah',
+                data: expensesData,
+                color: '#dc3545'
+            }, {
+                name: 'Profit',
+                data: profitData,
+                color: '#ffc107'
             }]
         });
     </script>

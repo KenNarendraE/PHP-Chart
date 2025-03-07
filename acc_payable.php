@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue vs. Expenses</title>
+    <title>Accounts Payable & Receivable</title>
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
-
+    
     <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
@@ -24,20 +24,20 @@
 
     <!-- Konten -->
     <div class="container">
-        <p>Grafik perbandingan pendapatan dan pengeluaran berdasarkan data bulanan.</p>
+        <p>Menampilkan perbandingan antara akun yang harus dibayar (Accounts Payable) dan akun yang harus diterima (Accounts Receivable).</p>
         
         <!-- Container Chart -->
-        <div id="revenue-expenses-chart" style="width:100%; height:400px;"></div>
+        <div id="payable-receivable-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Revenue vs. Expenses
-        Highcharts.chart('revenue-expenses-chart', {
+        // Inisialisasi Highcharts untuk Accounts Payable & Receivable
+        Highcharts.chart('payable-receivable-chart', {
             chart: {
-                type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
+                type: 'column' // Bisa diubah ke 'line' atau 'bar' sesuai kebutuhan
             },
             title: {
-                text: 'Revenue vs. Expenses'
+                text: 'Accounts Payable & Receivable'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
@@ -51,16 +51,15 @@
                 }
             },
             series: [{
-                name: 'Revenue (Pendapatan)',
-                data: [100, 120, 140, 160, 180, 200, 220, 250, 230, 210, 190, 170],
-                color: '#2ecc71' // Warna hijau untuk revenue
+                name: 'Accounts Receivable',
+                data: [120, 140, 160, 180, 200, 220, 250, 270, 260, 240, 230, 210],
+                color: '#28a745' // Hijau
             }, {
-                name: 'Expenses (Pengeluaran)',
-                data: [80, 90, 100, 110, 130, 140, 160, 180, 170, 150, 140, 120],
-                color: '#e74c3c' // Warna merah untuk expenses
+                name: 'Accounts Payable',
+                data: [100, 110, 130, 140, 150, 170, 190, 210, 200, 180, 160, 150],
+                color: '#dc3545' // Merah
             }]
         });
     </script>
-
 </body>
 </html>

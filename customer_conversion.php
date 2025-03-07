@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue vs. Expenses</title>
+    <title>Customer Conversion Rate</title>
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
@@ -24,20 +24,20 @@
 
     <!-- Konten -->
     <div class="container">
-        <p>Grafik perbandingan pendapatan dan pengeluaran berdasarkan data bulanan.</p>
+        <p>Menampilkan tingkat konversi pelanggan setiap bulan.</p>
         
         <!-- Container Chart -->
-        <div id="revenue-expenses-chart" style="width:100%; height:400px;"></div>
+        <div id="conversion-rate-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Revenue vs. Expenses
-        Highcharts.chart('revenue-expenses-chart', {
+        // Inisialisasi Highcharts untuk Customer Conversion Rate
+        Highcharts.chart('conversion-rate-chart', {
             chart: {
-                type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
+                type: 'line' // Menggunakan line chart untuk tren konversi
             },
             title: {
-                text: 'Revenue vs. Expenses'
+                text: 'Customer Conversion Rate'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
@@ -47,20 +47,21 @@
             },
             yAxis: {
                 title: {
-                    text: 'Jumlah (Juta IDR)'
+                    text: 'Conversion Rate (%)'
+                },
+                labels: {
+                    format: '{value}%'
                 }
             },
             series: [{
-                name: 'Revenue (Pendapatan)',
-                data: [100, 120, 140, 160, 180, 200, 220, 250, 230, 210, 190, 170],
-                color: '#2ecc71' // Warna hijau untuk revenue
-            }, {
-                name: 'Expenses (Pengeluaran)',
-                data: [80, 90, 100, 110, 130, 140, 160, 180, 170, 150, 140, 120],
-                color: '#e74c3c' // Warna merah untuk expenses
-            }]
+                name: 'Conversion Rate',
+                data: [5.2, 6.1, 7.0, 8.3, 9.5, 10.2, 11.8, 12.5, 13.0, 12.2, 11.0, 9.8],
+                color: '#28a745'
+            }],
+            tooltip: {
+                valueSuffix: '%'
+            }
         });
     </script>
-
 </body>
 </html>

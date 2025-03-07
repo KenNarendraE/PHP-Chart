@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue vs. Expenses</title>
+    <title>Top Selling Products/Services</title>
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
@@ -24,43 +24,38 @@
 
     <!-- Konten -->
     <div class="container">
-        <p>Grafik perbandingan pendapatan dan pengeluaran berdasarkan data bulanan.</p>
+        <p>Produk/layanan terlaris berdasarkan jumlah unit yang terjual</p>
         
         <!-- Container Chart -->
-        <div id="revenue-expenses-chart" style="width:100%; height:400px;"></div>
+        <div id="top-selling-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Revenue vs. Expenses
-        Highcharts.chart('revenue-expenses-chart', {
+        // Inisialisasi Highcharts untuk Top Selling Products/Services
+        Highcharts.chart('top-selling-chart', {
             chart: {
-                type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
+                type: 'bar'
             },
             title: {
-                text: 'Revenue vs. Expenses'
+                text: 'Top Selling Products/Services'
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                categories: ['Produk A', 'Produk B', 'Produk C', 'Produk D', 'Produk E'],
                 title: {
-                    text: 'Bulan'
+                    text: 'Produk / Layanan'
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Jumlah (Juta IDR)'
+                    text: 'Jumlah Terjual'
                 }
             },
             series: [{
-                name: 'Revenue (Pendapatan)',
-                data: [100, 120, 140, 160, 180, 200, 220, 250, 230, 210, 190, 170],
-                color: '#2ecc71' // Warna hijau untuk revenue
-            }, {
-                name: 'Expenses (Pengeluaran)',
-                data: [80, 90, 100, 110, 130, 140, 160, 180, 170, 150, 140, 120],
-                color: '#e74c3c' // Warna merah untuk expenses
+                name: 'Unit Terjual',
+                data: [500, 450, 400, 350, 300],
+                color: '#007bff'
             }]
         });
     </script>
-
 </body>
 </html>

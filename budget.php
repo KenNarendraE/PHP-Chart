@@ -24,20 +24,20 @@
 
     <!-- Konten -->
     <div class="container">
-        <p>Grafik perbandingan pendapatan dan pengeluaran berdasarkan data bulanan.</p>
+        <p>membandingkan anggaran yang direncanakan (Budget) dengan hasil keuangan sebenarnya (Actual)</p>
         
         <!-- Container Chart -->
-        <div id="revenue-expenses-chart" style="width:100%; height:400px;"></div>
+        <div id="budget-actual-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
         // Inisialisasi Highcharts untuk Revenue vs. Expenses
-        Highcharts.chart('revenue-expenses-chart', {
+        Highcharts.chart('budget-actual-chart', {
             chart: {
                 type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
             },
             title: {
-                text: 'Revenue vs. Expenses'
+                text: 'Budget vs. Actual'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
@@ -51,16 +51,16 @@
                 }
             },
             series: [{
-                name: 'Revenue (Pendapatan)',
+                name: 'anggaran yang direncanakan (Budget)',
                 data: [100, 120, 140, 160, 180, 200, 220, 250, 230, 210, 190, 170],
-                color: '#2ecc71' // Warna hijau untuk revenue
+                color: '#0367fc'
             }, {
-                name: 'Expenses (Pengeluaran)',
+                name: 'hasil keuangan sebenarnya (Actual)',
                 data: [80, 90, 100, 110, 130, 140, 160, 180, 170, 150, 140, 120],
-                color: '#e74c3c' // Warna merah untuk expenses
+                color: '#fcba03'
             }]
         });
     </script>
-
 </body>
 </html>
+

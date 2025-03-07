@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue vs. Expenses</title>
+    <title>General Ledger Summary</title>
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
-
+    
     <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
@@ -24,20 +24,20 @@
 
     <!-- Konten -->
     <div class="container">
-        <p>Grafik perbandingan pendapatan dan pengeluaran berdasarkan data bulanan.</p>
+        <p>Menampilkan ringkasan transaksi dalam General Ledger berdasarkan kategori utama.</p>
         
         <!-- Container Chart -->
-        <div id="revenue-expenses-chart" style="width:100%; height:400px;"></div>
+        <div id="general-ledger-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Revenue vs. Expenses
-        Highcharts.chart('revenue-expenses-chart', {
+        // Inisialisasi Highcharts untuk General Ledger Summary
+        Highcharts.chart('general-ledger-chart', {
             chart: {
-                type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
+                type: 'column' // Bisa diubah ke 'bar' atau 'line' sesuai kebutuhan
             },
             title: {
-                text: 'Revenue vs. Expenses'
+                text: 'General Ledger Summary'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
@@ -51,16 +51,23 @@
                 }
             },
             series: [{
-                name: 'Revenue (Pendapatan)',
-                data: [100, 120, 140, 160, 180, 200, 220, 250, 230, 210, 190, 170],
-                color: '#2ecc71' // Warna hijau untuk revenue
+                name: 'Pendapatan (Revenue)',
+                data: [200, 220, 250, 280, 300, 330, 350, 370, 360, 340, 320, 300],
+                color: '#007bff' // Biru
             }, {
-                name: 'Expenses (Pengeluaran)',
-                data: [80, 90, 100, 110, 130, 140, 160, 180, 170, 150, 140, 120],
-                color: '#e74c3c' // Warna merah untuk expenses
+                name: 'Beban (Expenses)',
+                data: [100, 120, 130, 140, 160, 180, 190, 200, 210, 220, 230, 240],
+                color: '#dc3545' // Merah
+            }, {
+                name: 'Aset (Assets)',
+                data: [500, 520, 540, 560, 580, 600, 620, 640, 660, 680, 700, 720],
+                color: '#28a745' // Hijau
+            }, {
+                name: 'Liabilitas (Liabilities)',
+                data: [300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410],
+                color: '#fd7e14' // Oranye
             }]
         });
     </script>
-
 </body>
 </html>
