@@ -45,7 +45,7 @@
                 "Supplier Performance Analysis"=> "sup_performance.php",
                 "Purchase Order Tracking"=> "purchase_order.php",
                 "Cost Savings & Spend Analysis"=> "cost_saving.php",
-                "Lead Time & Delivery Status"=> "cashflow.php",
+                "Lead Time & Delivery Status"=> "lead_time.php",
                 "Inventory Purchase Trends"=> "cashflow.php",
                 "Machine Utilization Rate"=> "cashflow.php",
                 "Production Output vs. Target"=> "cashflow.php",
