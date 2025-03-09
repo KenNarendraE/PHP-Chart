@@ -46,7 +46,7 @@
                 "Purchase Order Tracking"=> "purchase_order.php",
                 "Cost Savings & Spend Analysis"=> "cost_saving.php",
                 "Lead Time & Delivery Status"=> "lead_time.php",
-                "Inventory Purchase Trends"=> "cashflow.php",
+                "Inventory Purchase Trends"=> "inventory_purchase.php",
                 "Machine Utilization Rate"=> "cashflow.php",
                 "Production Output vs. Target"=> "cashflow.php",
                 "Downtime & Maintenance Tracking"=> "cashflow.php",
