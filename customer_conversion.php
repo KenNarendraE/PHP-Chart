@@ -1,3 +1,21 @@
+<?php
+include 'koneksi.php';
+
+$tahun = 2024;
+$query = "SELECT bulan, conversion_rate FROM customer_conversion 
+          WHERE tahun = $tahun 
+          ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
+$result = mysqli_query($koneksi, $query);
+
+$bulanLabels = [];
+$conversionRates = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $bulanLabels[] = $row['bulan'];
+    $conversionRates[] = (float) $row['conversion_rate'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,59 +27,66 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">Bussiness Chart</h1>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="chart.php">Charts</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Konten -->
+<!-- Navbar -->
+<nav class="navbar">
     <div class="container">
-        <p>Menampilkan tingkat konversi pelanggan setiap bulan.</p>
-        
-        <!-- Container Chart -->
-        <div id="conversion-rate-chart" style="width:100%; height:400px;"></div>
+        <h1 class="logo">Business Chart</h1>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="chart.php">Charts</a></li>
+            <li><a href="customer_conversion.php">Conversion Rate</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </div>
+</nav>
 
-    <script>
-        // Inisialisasi Highcharts untuk Customer Conversion Rate
-        Highcharts.chart('conversion-rate-chart', {
-            chart: {
-                type: 'line' // Menggunakan line chart untuk tren konversi
-            },
-            title: {
-                text: 'Customer Conversion Rate'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                title: {
-                    text: 'Bulan'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Conversion Rate (%)'
-                },
-                labels: {
-                    format: '{value}%'
-                }
-            },
-            series: [{
-                name: 'Conversion Rate',
-                data: [5.2, 6.1, 7.0, 8.3, 9.5, 10.2, 11.8, 12.5, 13.0, 12.2, 11.0, 9.8],
-                color: '#28a745'
-            }],
-            tooltip: {
-                valueSuffix: '%'
-            }
-        });
-    </script>
+<!-- Konten -->
+<div class="container">
+    <p>Menampilkan tingkat konversi pelanggan setiap bulan.</p>
+    
+    <!-- Container Chart -->
+    <div id="conversion-rate-chart" style="width:100%; height:400px;"></div>
+
+    <!-- Debug Output -->
+    <div style="margin-top: 20px;">
+        <h3>Debug Output :</h3>
+        <pre style="background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+<?php
+echo "Conversion Rate:\n";
+print_r($conversionRates);
+?>
+        </pre>
+    </div>
+</div>
+
+<script>
+Highcharts.chart('conversion-rate-chart', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Customer Conversion Rate'
+    },
+    xAxis: {
+        categories: <?= json_encode($bulanLabels) ?>,
+        title: { text: 'Bulan' }
+    },
+    yAxis: {
+        title: { text: 'Conversion Rate (%)' },
+        labels: {
+            format: '{value}%'
+        }
+    },
+    series: [{
+        name: 'Conversion Rate',
+        data: <?= json_encode($conversionRates) ?>,
+        color: 'green'
+    }],
+    tooltip: {
+        valueSuffix: '%'
+    }
+});
+</script>
+
 </body>
 </html>

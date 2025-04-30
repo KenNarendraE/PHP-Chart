@@ -1,3 +1,23 @@
+<?php
+include 'koneksi.php';
+
+$tahun = 2024;
+$query = "SELECT bulan, target, pencapaian FROM sales_performance 
+          WHERE tahun = $tahun 
+          ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
+$result = mysqli_query($koneksi, $query);
+
+$bulanLabels = [];
+$target = [];
+$pencapaian = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $bulanLabels[] = $row['bulan'];
+    $target[] = (int) $row['target'];
+    $pencapaian[] = (int) $row['pencapaian'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,57 +29,69 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">Bussiness Chart</h1>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="chart.php">Charts</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Konten -->
+<!-- Navbar -->
+<nav class="navbar">
     <div class="container">
-        <p>Menampilkan performa penjualan bulanan berdasarkan target dan pencapaian.</p>
-        
-        <!-- Container Chart -->
-        <div id="sales-performance-chart" style="width:100%; height:400px;"></div>
+        <h1 class="logo">Business Chart</h1>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="chart.php">Charts</a></li>
+            <li><a href="sales_performance.php">Sales Performance</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </div>
+</nav>
 
-    <script>
-        // Inisialisasi Highcharts untuk Monthly Sales Performance
-        Highcharts.chart('sales-performance-chart', {
-            chart: {
-                type: 'line' // Menggunakan bar chart (vertical bars)
-            },
-            title: {
-                text: 'Monthly Sales Performance'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                title: {
-                    text: 'Bulan'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Penjualan (Juta IDR)'
-                }
-            },
-            series: [{
-                name: 'Target Penjualan',
-                data: [120, 130, 150, 170, 190, 210, 230, 250, 240, 220, 200, 180],
-                color: '#0367fc'
-            }, {
-                name: 'Pencapaian Penjualan',
-                data: [100, 110, 140, 160, 180, 200, 220, 230, 220, 200, 190, 170],
-                color: '#28a745'
-            }]
-        });
-    </script>
+<!-- Konten -->
+<div class="container">
+    <p>Menampilkan performa penjualan bulanan berdasarkan target dan pencapaian.</p>
+
+    <div id="sales-performance-chart" style="width:100%; height:400px;"></div>
+
+    <!-- Debug Output -->
+    <div style="margin-top: 20px;">
+        <h3>Debug Output :</h3>
+        <pre style="background: #f8f9fa; border: 1px solid #ccc; padding: 10px;">
+<?php
+echo "Target:\n";
+print_r($target);
+echo "Pencapaian:\n";
+print_r($pencapaian);
+?>
+        </pre>
+    </div>
+</div>
+
+<script>
+Highcharts.chart('sales-performance-chart', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Monthly Sales Performance'
+    },
+    xAxis: {
+        categories: <?= json_encode($bulanLabels) ?>,
+        title: {
+            text: 'Bulan'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Penjualan (Juta IDR)'
+        }
+    },
+    series: [{
+        name: 'Target Penjualan',
+        data: <?= json_encode($target) ?>,
+        color: 'blue'
+    }, {
+        name: 'Pencapaian Penjualan',
+        data: <?= json_encode($pencapaian) ?>,
+        color: 'green'
+    }]
+});
+</script>
+
 </body>
 </html>

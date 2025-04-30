@@ -1,3 +1,27 @@
+<?php
+include 'koneksi.php';
+
+$tahun = 2024;
+$query = "SELECT bulan, revenue, expenses, assets, liabilities FROM general_ledger 
+          WHERE tahun = $tahun 
+          ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
+$result = mysqli_query($koneksi, $query);
+
+$bulanLabels = [];
+$revenue = [];
+$expenses = [];
+$assets = [];
+$liabilities = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $bulanLabels[] = $row['bulan'];
+    $revenue[] = (int) $row['revenue'];
+    $expenses[] = (int) $row['expenses'];
+    $assets[] = (int) $row['assets'];
+    $liabilities[] = (int) $row['liabilities'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,65 +33,77 @@
 </head>
 <body>
     
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">Bussiness Chart</h1>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="chart.php">Charts</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Konten -->
+<nav class="navbar">
     <div class="container">
-        <p>Menampilkan ringkasan transaksi dalam General Ledger berdasarkan kategori utama.</p>
-        
-        <!-- Container Chart -->
-        <div id="general-ledger-chart" style="width:100%; height:400px;"></div>
+        <h1 class="logo">Business Chart</h1>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="chart.php">Charts</a></li>
+            <li><a href="general_ledger_summary.php">General Ledger</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </div>
+</nav>
 
-    <script>
-        // Inisialisasi Highcharts untuk General Ledger Summary
-        Highcharts.chart('general-ledger-chart', {
-            chart: {
-                type: 'column' // Bisa diubah ke 'bar' atau 'line' sesuai kebutuhan
-            },
-            title: {
-                text: 'General Ledger Summary'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                title: {
-                    text: 'Bulan'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Jumlah (Juta IDR)'
-                }
-            },
-            series: [{
-                name: 'Pendapatan (Revenue)',
-                data: [200, 220, 250, 280, 300, 330, 350, 370, 360, 340, 320, 300],
-                color: '#007bff' // Biru
-            }, {
-                name: 'Beban (Expenses)',
-                data: [100, 120, 130, 140, 160, 180, 190, 200, 210, 220, 230, 240],
-                color: '#dc3545' // Merah
-            }, {
-                name: 'Aset (Assets)',
-                data: [500, 520, 540, 560, 580, 600, 620, 640, 660, 680, 700, 720],
-                color: '#28a745' // Hijau
-            }, {
-                name: 'Liabilitas (Liabilities)',
-                data: [300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410],
-                color: '#fd7e14' // Oranye
-            }]
-        });
-    </script>
+<div class="container">
+    <p>Menampilkan ringkasan transaksi dalam General Ledger berdasarkan kategori utama.</p>
+    <div id="general-ledger-chart" style="width:100%; height:400px;"></div>
+
+    <!-- Debug Output -->
+    <div style="display:flex; gap:20px; margin-top:20px;">
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+Revenue:
+<?php print_r($revenue); ?>
+        </pre>
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+Expenses:
+<?php print_r($expenses); ?>
+        </pre>
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+Assets:
+<?php print_r($assets); ?>
+        </pre>
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+Liabilities:
+<?php print_r($liabilities); ?>
+        </pre>
+    </div>
+</div>
+
+<script>
+Highcharts.chart('general-ledger-chart', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'General Ledger Summary'
+    },
+    xAxis: {
+        categories: <?= json_encode($bulanLabels) ?>,
+        title: { text: 'Bulan' }
+    },
+    yAxis: {
+        title: { text: 'Jumlah (Juta IDR)' }
+    },
+    series: [{
+        name: 'Pendapatan (Revenue)',
+        data: <?= json_encode($revenue) ?>,
+        color: '#007bff'
+    }, {
+        name: 'Beban (Expenses)',
+        data: <?= json_encode($expenses) ?>,
+        color: '#dc3545'
+    }, {
+        name: 'Aset (Assets)',
+        data: <?= json_encode($assets) ?>,
+        color: '#28a745'
+    }, {
+        name: 'Liabilitas (Liabilities)',
+        data: <?= json_encode($liabilities) ?>,
+        color: '#fd7e14'
+    }]
+});
+</script>
+
 </body>
 </html>
