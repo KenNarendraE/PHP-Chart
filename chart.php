@@ -27,7 +27,6 @@
         <div class="chart-list">
             <?php
             $charts = [
-                "SALES REPORT" => "sales_report.php",
                 "Cash Flow Analysis" => "cashflow.php",
                 "Revenue vs. Expenses"=> "revenue.php",
                 "Budget vs. Actual"=> "budget.php",
@@ -48,21 +47,21 @@
                 "Cost Savings & Spend Analysis"=> "cost_saving.php",
                 "Lead Time & Delivery Status"=> "lead_time.php",
                 "Inventory Purchase Trends"=> "inventory_purchase.php",
-                "Machine Utilization Rate"=> "cashflow.php",
-                "Production Output vs. Target"=> "cashflow.php",
-                "Downtime & Maintenance Tracking"=> "cashflow.php",
-                "Quality Control Metrics"=> "cashflow.php",
-                "Work Order Management"=> "cashflow.php",
-                "Demand Forecasting & Planning"=> "cashflow.php",
-                "Inventory Turnover Ratio"=> "cashflow.php",
-                "Work-In-Progress (WIP) Tracking"=> "cashflow.php",
-                "Supply & Demand Alignment"=> "cashflow.php",
-                "Stock Reorder Point"=> "cashflow.php",
-                "Delivery Performance & Status"=> "cashflow.php",
-                "Freight & Transportation Costs"=> "cashflow.php",
-                "Warehouse Capacity Utilization"=> "cashflow.php",
-                "Order Fulfillment Cycle Time"=> "cashflow.php",
-                "Supplier Lead Time Analysis"=> "cashflow.php"
+                "Machine Utilization Rate"=> "machine_utilization.php",
+                "Production Output vs. Target"=> "production_outputvstarget.php",
+                "Downtime & Maintenance Tracking"=> "downtime_maintenance.php",
+                "Quality Control Metrics"=> "Quality_ControlMetrics.php",
+                "Work Order Management"=> "work_ordermanagement.php",
+                "Demand Forecasting & Planning"=> "demand_forecasting&planning.php",
+                "Inventory Turnover Ratio"=> "inventory_turnoverratio.php",
+                "Work-In-Progress (WIP) Tracking"=> "workinprogresstracking.php",
+                "Supply & Demand Alignment"=> "supply&demandalignment.php",
+                "Stock Reorder Point"=> "stockreorderpoint.php",
+                "Delivery Performance & Status"=> "delivery_performance.php",
+                "Freight & Transportation Costs"=> "freight&transportationcosts.php",
+                "Warehouse Capacity Utilization"=> "warehouse_capacityutilization.php",
+                "Order Fulfillment Cycle Time"=> "order_fulfillmentcycletime.php",
+                "Supplier Lead Time Analysis"=> "supplier_leadtimeanalysis.php"
             ];
 
             foreach ($charts as $chartName => $chartFile) {

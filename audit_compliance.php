@@ -1,3 +1,21 @@
+<?php
+include 'koneksi.php';
+
+$year = 2025;
+$query = "SELECT bulan, audit_dilakukan, tingkat_kepatuhan FROM audit_compliance WHERE tahun = $year ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
+$result = mysqli_query($koneksi, $query);
+
+$audit = [];
+$compliance = [];
+$bulanLabels = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $bulanLabels[] = $row['bulan'];
+    $audit[] = (int) $row['audit_dilakukan'];
+    $compliance[] = (int) $row['tingkat_kepatuhan'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,57 +27,61 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
-            <h1 class="logo">Bussiness Chart</h1>
+            <h1 class="logo">Business Chart</h1>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="chart.php">Charts</a></li>
-                <li><a href="#">Reports</a></li>
+                <li><a href="audit_compliance.php">Audit & Compliance</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Konten -->
     <div class="container">
         <p>Menampilkan jumlah audit yang dilakukan serta tingkat kepatuhan setiap bulannya.</p>
-        
-        <!-- Container Chart -->
         <div id="audit-compliance-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Audit & Compliance Reports
-        Highcharts.chart('audit-compliance-chart', {
-            chart: {
-                type: 'column' // Menggunakan bar chart (vertical bars)
-            },
+    Highcharts.chart('audit-compliance-chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Audit & Compliance Reports'
+        },
+        xAxis: {
+            categories: <?= json_encode($bulanLabels) ?>,
             title: {
-                text: 'Audit & Compliance Reports'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                title: {
-                    text: 'Bulan'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Jumlah Audit & Kepatuhan (%)'
-                }
-            },
-            series: [{
-                name: 'Audit Dilakukan',
-                data: [5, 7, 9, 6, 8, 10, 12, 15, 14, 13, 11, 9],
-                color: '#0367fc'
-            }, {
-                name: 'Kepatuhan (%)',
-                data: [75, 80, 78, 85, 88, 90, 92, 95, 93, 91, 89, 87],
-                color: '#28a745'
-            }]
-        });
+                text: 'Bulan'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Jumlah Audit & Kepatuhan (%)'
+            }
+        },
+        series: [{
+            name: 'Audit Dilakukan',
+            data: <?= json_encode($audit) ?>,
+            color: '#0367fc'
+        }, {
+            name: 'Kepatuhan (%)',
+            data: <?= json_encode($compliance) ?>,
+            color: '#28a745'
+        }]
+    });
     </script>
+
 </body>
 </html>
+<pre>
+<?php
+echo 'Audit: ';
+print_r($audit);
+echo "\nCompliance: ";
+print_r($compliance);
+?>
+</pre>

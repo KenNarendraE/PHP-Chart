@@ -33,7 +33,7 @@ $bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', '
     
     <nav class="navbar">
         <div class="container">
-            <h1 class="logo">MyWebsite</h1>
+            <h1 class="logo">Accounts Payable & Receivable</h1>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="chart.php">Charts</a></li>
