@@ -1,3 +1,25 @@
+<?php
+// Include koneksi database
+include 'koneksi.php';
+
+// Ambil data dari DB
+$year = 2025;
+$query = "SELECT bulan, accounts_receivable, accounts_payable FROM financial_data WHERE tahun = $year ORDER BY bulan";
+$result = mysqli_query($koneksi, $query);
+
+// Siapkan array kosong
+$receivable = [];
+$payable = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $receivable[] = (int) $row['accounts_receivable'];
+    $payable[] = (int) $row['accounts_payable'];
+}
+
+// Array label bulan
+$bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,7 +31,6 @@
 </head>
 <body>
     
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
             <h1 class="logo">MyWebsite</h1>
@@ -22,44 +43,45 @@
         </div>
     </nav>
 
-    <!-- Konten -->
     <div class="container">
         <p>Menampilkan perbandingan antara akun yang harus dibayar (Accounts Payable) dan akun yang harus diterima (Accounts Receivable).</p>
         
-        <!-- Container Chart -->
         <div id="payable-receivable-chart" style="width:100%; height:400px;"></div>
     </div>
 
     <script>
-        // Inisialisasi Highcharts untuk Accounts Payable & Receivable
-        Highcharts.chart('payable-receivable-chart', {
-            chart: {
-                type: 'column' // Bisa diubah ke 'line' atau 'bar' sesuai kebutuhan
-            },
-            title: {
-                text: 'Accounts Payable & Receivable'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                title: {
-                    text: 'Bulan'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Jumlah (Juta IDR)'
-                }
-            },
-            series: [{
-                name: 'Accounts Receivable',
-                data: [120, 140, 160, 180, 200, 220, 250, 270, 260, 240, 230, 210],
-                color: '#28a745' // Hijau
-            }, {
-                name: 'Accounts Payable',
-                data: [100, 110, 130, 140, 150, 170, 190, 210, 200, 180, 160, 150],
-                color: '#dc3545' // Merah
-            }]
-        });
+    Highcharts.chart('payable-receivable-chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Accounts Payable & Receivable'
+        },
+        xAxis: {
+            categories: <?= json_encode($bulanLabels) ?>,
+            title: { text: 'Bulan' }
+        },
+        yAxis: {
+            title: { text: 'Jumlah (Juta IDR)' }
+        },
+        series: [{
+            name: 'Accounts Receivable',
+            data: <?= json_encode($receivable) ?>,
+            color: '#28a745'
+        }, {
+            name: 'Accounts Payable',
+            data: <?= json_encode($payable) ?>,
+            color: '#dc3545'
+        }]
+    });
     </script>
 </body>
 </html>
+<pre>
+<?php
+echo 'Receivable: ';
+print_r($receivable);
+echo "\nPayable: ";
+print_r($payable);
+?>
+</pre>

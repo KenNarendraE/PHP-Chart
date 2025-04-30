@@ -27,6 +27,7 @@
         <div class="chart-list">
             <?php
             $charts = [
+                "SALES REPORT" => "sales_report.php",
                 "Cash Flow Analysis" => "cashflow.php",
                 "Revenue vs. Expenses"=> "revenue.php",
                 "Budget vs. Actual"=> "budget.php",
