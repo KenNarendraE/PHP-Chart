@@ -36,7 +36,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="chart.php">Charts</a></li>
-                <li><a href="profit_loss.php">Profit & Loss</a></li>
+                <li><a href="#">reports</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>

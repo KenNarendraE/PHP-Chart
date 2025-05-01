@@ -2,7 +2,8 @@
 include 'koneksi.php';
 
 $year = 2025;
-$query = "SELECT bulan, budget, actual FROM budget_actual WHERE tahun = $year ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
+$query = "SELECT bulan, budget, actual FROM budget_actual WHERE tahun = $year 
+          ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
 $result = mysqli_query($koneksi, $query);
 
 $bulanLabels = [];
@@ -27,23 +28,43 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 <body>
 
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
             <h1 class="logo">Business Chart</h1>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="chart.php">Charts</a></li>
-                <li><a href="budget_actual.php">Budget vs Actual</a></li>
+                <li><a href="#">Reports</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>
     </nav>
 
+    <!-- Konten -->
     <div class="container">
         <p>Membandingkan anggaran yang direncanakan (Budget) dengan hasil keuangan sebenarnya (Actual).</p>
         <div id="budget-actual-chart" style="width:100%; height:400px;"></div>
+
+        <!-- Debug Output (di tengah) -->
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+            <pre style="border: 1px solid #ccc; padding: 10px; background: #f9f9f9; max-width: 300px;">
+<?php
+echo "Budget:\n";
+print_r($budget);
+?>
+            </pre>
+
+            <pre style="border: 1px solid #ccc; padding: 10px; background: #f9f9f9; max-width: 300px;">
+<?php
+echo "Actual:\n";
+print_r($actual);
+?>
+            </pre>
+        </div>
     </div>
 
+    <!-- Highcharts -->
     <script>
     Highcharts.chart('budget-actual-chart', {
         chart: {
@@ -72,18 +93,3 @@ while ($row = mysqli_fetch_assoc($result)) {
     </script>
 </body>
 </html>
-<div style="display: flex; gap: 20px;">
-    <pre style="border: 1px solid #ccc; padding: 10px;">
-    <?php
-    echo "Budget:\n";
-    print_r($budget);
-    ?>
-    </pre>
-
-    <pre style="border: 1px solid #ccc; padding: 10px;">
-    <?php
-    echo "Actual:\n";
-    print_r($actual);
-    ?>
-    </pre>
-</div>

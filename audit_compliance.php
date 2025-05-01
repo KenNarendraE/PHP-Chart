@@ -2,7 +2,9 @@
 include 'koneksi.php';
 
 $year = 2025;
-$query = "SELECT bulan, audit_dilakukan, tingkat_kepatuhan FROM audit_compliance WHERE tahun = $year ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
+$query = "SELECT bulan, audit_dilakukan, tingkat_kepatuhan FROM audit_compliance 
+          WHERE tahun = $year 
+          ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
 $result = mysqli_query($koneksi, $query);
 
 $audit = [];
@@ -27,61 +29,73 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">Business Chart</h1>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="chart.php">Charts</a></li>
-                <li><a href="audit_compliance.php">Audit & Compliance</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
+<!-- Navbar -->
+<nav class="navbar">
     <div class="container">
-        <p>Menampilkan jumlah audit yang dilakukan serta tingkat kepatuhan setiap bulannya.</p>
-        <div id="audit-compliance-chart" style="width:100%; height:400px;"></div>
+        <h1 class="logo">Business Chart</h1>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="chart.php">Charts</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </div>
+</nav>
 
-    <script>
-    Highcharts.chart('audit-compliance-chart', {
-        chart: {
-            type: 'column'
-        },
+<!-- Konten -->
+<div class="container">
+    <p>Menampilkan jumlah audit yang dilakukan serta tingkat kepatuhan setiap bulannya.</p>
+    <div id="audit-compliance-chart" style="width:100%; height:400px;"></div>
+
+    <!-- Debug Output (tengah) -->
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+        <pre style="background:#f9f9f9; border:1px solid #ccc; padding:10px; max-width:300px;">
+Audit:
+<?php print_r($audit); ?>
+        </pre>
+        <pre style="background:#f9f9f9; border:1px solid #ccc; padding:10px; max-width:300px;">
+Compliance:
+<?php print_r($compliance); ?>
+        </pre>
+    </div>
+</div>
+
+<!-- Highcharts -->
+<script>
+Highcharts.chart('audit-compliance-chart', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Audit & Compliance Reports'
+    },
+    xAxis: {
+        categories: <?= json_encode($bulanLabels) ?>,
         title: {
-            text: 'Audit & Compliance Reports'
-        },
-        xAxis: {
-            categories: <?= json_encode($bulanLabels) ?>,
-            title: {
-                text: 'Bulan'
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Jumlah Audit & Kepatuhan (%)'
-            }
-        },
-        series: [{
-            name: 'Audit Dilakukan',
-            data: <?= json_encode($audit) ?>,
-            color: '#0367fc'
-        }, {
-            name: 'Kepatuhan (%)',
-            data: <?= json_encode($compliance) ?>,
-            color: '#28a745'
-        }]
-    });
-    </script>
+            text: 'Bulan'
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Jumlah Audit & Kepatuhan (%)'
+        }
+    },
+    tooltip: {
+        shared: true,
+        crosshairs: true
+    },
+    series: [{
+        name: 'Audit Dilakukan',
+        data: <?= json_encode($audit) ?>,
+        color: '#0367fc'
+    }, {
+        name: 'Kepatuhan (%)',
+        data: <?= json_encode($compliance) ?>,
+        color: '#28a745'
+    }]
+});
+</script>
 
 </body>
 </html>
-<pre>
-<?php
-echo 'Audit: ';
-print_r($audit);
-echo "\nCompliance: ";
-print_r($compliance);
-?>
-</pre>

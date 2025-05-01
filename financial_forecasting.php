@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $profitActual[] = (int)$row['revenue'] - (int)$row['expenses'];
 }
 
-// Forecast: 3 bulan ke depan berdasarkan persentase kenaikan
+// Forecast untuk 3 bulan ke depan
 $forecastMonths = ['Jan+1', 'Feb+1', 'Mar+1'];
 $lastRevenue = end($revenueActual);
 $lastExpenses = end($expensesActual);
@@ -66,7 +66,7 @@ $allMonths = array_merge($bulanLabels, $forecastMonths);
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
             <li><a href="chart.php">Charts</a></li>
-            <li><a href="financial_forecast.php">Forecast</a></li>
+            <li><a href="#">Reports</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </div>
@@ -77,17 +77,17 @@ $allMonths = array_merge($bulanLabels, $forecastMonths);
     <p>Grafik ini menampilkan data keuangan aktual dan proyeksi keuangan untuk bulan mendatang.</p>
     <div id="financial-forecast-chart" style="width:100%; height:400px;"></div>
 
-    <!-- DEBUG OUTPUT -->
-    <div style="display:flex; gap:20px; margin-top:20px;">
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+    <!-- Debug Output (di tengah) -->
+    <div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
+        <pre style="background:#f1f1f1; padding:10px; border:1px solid #ccc; max-width: 300px;">
 Revenue:
 <?php print_r($revenueActual); ?>
         </pre>
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+        <pre style="background:#f1f1f1; padding:10px; border:1px solid #ccc; max-width: 300px;">
 Expenses:
 <?php print_r($expensesActual); ?>
         </pre>
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+        <pre style="background:#f1f1f1; padding:10px; border:1px solid #ccc; max-width: 300px;">
 Profit:
 <?php print_r($profitActual); ?>
         </pre>

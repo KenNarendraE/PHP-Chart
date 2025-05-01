@@ -36,7 +36,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
             <li><a href="chart.php">Charts</a></li>
-            <li><a href="sales_performance.php">Sales Performance</a></li>
+            <li><a href="#">Reports</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </div>
@@ -46,22 +46,23 @@ while ($row = mysqli_fetch_assoc($result)) {
 <div class="container">
     <p>Menampilkan performa penjualan bulanan berdasarkan target dan pencapaian.</p>
 
+    <!-- Chart -->
     <div id="sales-performance-chart" style="width:100%; height:400px;"></div>
 
-    <!-- Debug Output -->
-    <div style="margin-top: 20px;">
-        <h3>Debug Output :</h3>
-        <pre style="background: #f8f9fa; border: 1px solid #ccc; padding: 10px;">
-<?php
-echo "Target:\n";
-print_r($target);
-echo "Pencapaian:\n";
-print_r($pencapaian);
-?>
+    <!-- Debug Output (sejajar dan di tengah) -->
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+        <pre style="background: #f8f9fa; border: 1px solid #ccc; padding: 10px; max-width: 300px;">
+Target:
+<?php print_r($target); ?>
+        </pre>
+        <pre style="background: #f8f9fa; border: 1px solid #ccc; padding: 10px; max-width: 300px;">
+Pencapaian:
+<?php print_r($pencapaian); ?>
         </pre>
     </div>
 </div>
 
+<!-- Highcharts -->
 <script>
 Highcharts.chart('sales-performance-chart', {
     chart: {

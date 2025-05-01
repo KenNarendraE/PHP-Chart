@@ -39,7 +39,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
             <li><a href="chart.php">Charts</a></li>
-            <li><a href="tax_compliance.php">Tax Compliance</a></li>
+            <li><a href="#">Reports</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </div>

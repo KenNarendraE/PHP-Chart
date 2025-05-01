@@ -34,7 +34,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
             <li><a href="chart.php">Charts</a></li>
-            <li><a href="customer_conversion.php">Conversion Rate</a></li>
+            <li><a href="#">Reports</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </div>
@@ -47,18 +47,16 @@ while ($row = mysqli_fetch_assoc($result)) {
     <!-- Container Chart -->
     <div id="conversion-rate-chart" style="width:100%; height:400px;"></div>
 
-    <!-- Debug Output -->
-    <div style="margin-top: 20px;">
-        <h3>Debug Output :</h3>
-        <pre style="background:#f1f1f1; padding:10px; border:1px solid #ccc;">
-<?php
-echo "Conversion Rate:\n";
-print_r($conversionRates);
-?>
+    <!-- Debug Output (di tengah dan sejajar) -->
+    <div style="margin-top: 20px; display: flex; justify-content: center;">
+        <pre style="background:#f1f1f1; padding:10px; border:1px solid #ccc; max-width: 600px;">
+Conversion Rate:
+<?php print_r($conversionRates); ?>
         </pre>
     </div>
 </div>
 
+<!-- Highcharts Script -->
 <script>
 Highcharts.chart('conversion-rate-chart', {
     chart: {

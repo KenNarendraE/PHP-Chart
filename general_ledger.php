@@ -39,7 +39,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
             <li><a href="chart.php">Charts</a></li>
-            <li><a href="general_ledger_summary.php">General Ledger</a></li>
+            <li><a href="#">Reports</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </div>
@@ -49,21 +49,21 @@ while ($row = mysqli_fetch_assoc($result)) {
     <p>Menampilkan ringkasan transaksi dalam General Ledger berdasarkan kategori utama.</p>
     <div id="general-ledger-chart" style="width:100%; height:400px;"></div>
 
-    <!-- Debug Output -->
-    <div style="display:flex; gap:20px; margin-top:20px;">
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+    <!-- Debug Output (ditengah) -->
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+        <pre style="background:#f1f1f1; border:1px solid #ccc; padding:10px; max-width: 300px;">
 Revenue:
 <?php print_r($revenue); ?>
         </pre>
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+        <pre style="background:#f1f1f1; border:1px solid #ccc; padding:10px; max-width: 300px;">
 Expenses:
 <?php print_r($expenses); ?>
         </pre>
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+        <pre style="background:#f1f1f1; border:1px solid #ccc; padding:10px; max-width: 300px;">
 Assets:
 <?php print_r($assets); ?>
         </pre>
-        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+        <pre style="background:#f1f1f1; border:1px solid #ccc; padding:10px; max-width: 300px;">
 Liabilities:
 <?php print_r($liabilities); ?>
         </pre>

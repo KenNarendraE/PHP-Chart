@@ -1,3 +1,23 @@
+<?php
+include 'koneksi.php';
+
+$tahun = 2024;
+$query = "SELECT nama_supplier, on_time_delivery, quality_rating FROM supplier_performance 
+          WHERE tahun = $tahun 
+          ORDER BY nama_supplier ASC";
+$result = mysqli_query($koneksi, $query);
+
+$suppliers = [];
+$onTime = [];
+$quality = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $suppliers[] = $row['nama_supplier'];
+    $onTime[] = (float) $row['on_time_delivery'];
+    $quality[] = (float) $row['quality_rating'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,59 +29,73 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">MyWebsite</h1>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="chart.php">Charts</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Konten -->
+<!-- Navbar -->
+<nav class="navbar">
     <div class="container">
-        <p>Grafik ini membandingkan dua metrik utama performa supplier</p>
-        
-        <!-- Container Chart -->
-        <div id="sup_performance" style="width:100%; height:400px;"></div>
+        <h1 class="logo">MyWebsite</h1>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="chart.php">Charts</a></li>
+            <li><a href="supplier_performance.php">Supplier</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </div>
+</nav>
 
-    <script>
-        // Inisialisasi Highcharts untuk supplier performance analysis
-        Highcharts.chart('sup_performance', {
-            chart: {
-                type: 'line' // Bisa diganti ke 'line' atau 'bar' sesuai kebutuhan
-            },
-            title: {
-                text: 'Supplier Performance Analysis'
-            },
-            xAxis: {
-                categories: ['Supplier A', 'Supplier B', 'Supplier C', 'Supplier D', 'Supplier E'],
-                title: {
-                    text: 'Supplier'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Performance Metrics'
-                }
-            },
-            series: [{
-                name: 'On-time Delivery (%)',
-                data: [93, 87, 90, 84, 91],
-                color: '#145A32' // Warna hijau tua
-            }, {
-                name: 'Quality Rating (1-5)',
-                data: [4.9, 4.4, 4.6, 4.1, 4.7],
-                color: '#F1C40F', // Warna kuning
-                dashStyle: 'Dash' // Mengubah garis menjadi putus-putus
-            }]
-        });
-    </script>
+<!-- Konten -->
+<div class="container">
+    <p>Grafik ini membandingkan dua metrik utama performa supplier</p>
+    
+    <div id="sup_performance" style="width:100%; height:400px;"></div>
+
+    <!-- Debug Output Sejajar -->
+    <div style="display:flex; gap:20px; margin-top:30px;">
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+Supplier:
+<?php print_r($suppliers); ?>
+        </pre>
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+On-time Delivery (%):
+<?php print_r($onTime); ?>
+        </pre>
+        <pre style="flex:1; background:#f1f1f1; padding:10px; border:1px solid #ccc;">
+Quality Rating:
+<?php print_r($quality); ?>
+        </pre>
+    </div>
+</div>
+
+<script>
+Highcharts.chart('sup_performance', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Supplier Performance Analysis'
+    },
+    xAxis: {
+        categories: <?= json_encode($suppliers) ?>,
+        title: {
+            text: 'Supplier'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Performance Metrics'
+        }
+    },
+    series: [{
+        name: 'On-time Delivery (%)',
+        data: <?= json_encode($onTime) ?>,
+        color: 'darkgreen'
+    }, {
+        name: 'Quality Rating (1-5)',
+        data: <?= json_encode($quality) ?>,
+        color: 'gold',
+        dashStyle: 'Dash'
+    }]
+});
+</script>
 
 </body>
 </html>

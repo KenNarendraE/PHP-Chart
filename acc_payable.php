@@ -4,20 +4,22 @@ include 'koneksi.php';
 
 // Ambil data dari DB
 $year = 2025;
-$query = "SELECT bulan, accounts_receivable, accounts_payable FROM financial_data WHERE tahun = $year ORDER BY bulan";
+$query = "SELECT bulan, accounts_receivable, accounts_payable 
+          FROM financial_data 
+          WHERE tahun = $year 
+          ORDER BY FIELD(bulan, 'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des')";
 $result = mysqli_query($koneksi, $query);
 
 // Siapkan array kosong
 $receivable = [];
 $payable = [];
+$bulanLabels = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
+    $bulanLabels[] = $row['bulan'];
     $receivable[] = (int) $row['accounts_receivable'];
     $payable[] = (int) $row['accounts_payable'];
 }
-
-// Array label bulan
-$bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +33,7 @@ $bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', '
 </head>
 <body>
     
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
             <h1 class="logo">Accounts Payable & Receivable</h1>
@@ -43,12 +46,26 @@ $bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', '
         </div>
     </nav>
 
+    <!-- Konten -->
     <div class="container">
         <p>Menampilkan perbandingan antara akun yang harus dibayar (Accounts Payable) dan akun yang harus diterima (Accounts Receivable).</p>
         
         <div id="payable-receivable-chart" style="width:100%; height:400px;"></div>
+
+        <!-- Debug Output (tengah) -->
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+            <pre style="background:#f1f1f1; border:1px solid #ccc; padding:10px; max-width: 300px;">
+Receivable:
+<?php print_r($receivable); ?>
+            </pre>
+            <pre style="background:#f1f1f1; border:1px solid #ccc; padding:10px; max-width: 300px;">
+Payable:
+<?php print_r($payable); ?>
+            </pre>
+        </div>
     </div>
 
+    <!-- Highcharts -->
     <script>
     Highcharts.chart('payable-receivable-chart', {
         chart: {
@@ -77,11 +94,3 @@ $bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', '
     </script>
 </body>
 </html>
-<pre>
-<?php
-echo 'Receivable: ';
-print_r($receivable);
-echo "\nPayable: ";
-print_r($payable);
-?>
-</pre>
